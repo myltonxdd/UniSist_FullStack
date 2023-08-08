@@ -11,6 +11,7 @@
 
     $id = $_SESSION["master"]["id"];
     $nombre = $_SESSION["master"]["nombre"];
+    $correo = $_SESSION["master"]["email"];
     $mysqli->close();
 ?>
 
@@ -60,7 +61,7 @@
                 </div>
                 <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
@@ -79,9 +80,9 @@
             <div class="flex flex-row items-center justify-between w-full px-5 py-2">
                 <h2 class="text-2xl">Editar datos de perfil</h2>
                 <div class="flex flex-row items-center text-sm">
-                    <a href="">Home</a>
+                    <a href="./maestro_dash.php">Home</a>
                     <p>/</p>
-                    <a href="">Perfil</a>
+                    <div>Perfil</div>
                 </div>
             </div>
             <div class="flex flex-col md:w-11/12 md:border md:rounded-lg md:mt-2 bg-white">
@@ -90,11 +91,11 @@
                     <div class="text-[#828282] text-base font-medium">Informacion de usuario</div>
                 </div>
                 <hr class=" border-[#afb1b7]">
-                <form action="subirimg.php" method="post" enctype="multipart/form-data" class="px-6 flex flex-col gap-3 mt-2 items-start">
+                <form action="../model/edit_MastAlum.php" method="post" enctype="multipart/form-data" class="px-6 flex flex-col gap-3 mt-2 items-start">
 
                     <div class="flex flex-col w-full">
                         <label for="email" class="font-semibold text-sm">Correo Electronico</label>
-                        <input type="email" id="email" required name="email" placeholder="Ingrese su email" class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <input type="email" id="email" readonly name="email" placeholder="Ingrese su email" value="<?= $correo ?>" class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
                     
                     <div class="flex flex-col w-full">
@@ -103,13 +104,13 @@
                     </div>
 
                     <div class="flex flex-col w-full">
-                        <label for="name" class="font-semibold text-sm">Nombre(s)</label>
-                        <input type="text" id="name" name="name" placeholder="Ingrese su nombre(s)" class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <label for="nombre" class="font-semibold text-sm">Nombre(s)</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre(s)" class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
                     
                     <div class="flex flex-col w-full">
-                        <label for="name" class="font-semibold text-sm">Apellido(s)</label>
-                        <input type="text" id="name" name="name" placeholder="Ingrese su apellido(s)" class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <label for="apellido" class="font-semibold text-sm">Apellido(s)</label>
+                        <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido(s)" class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
 
                     <div class="flex flex-col w-full">
@@ -121,6 +122,8 @@
                         <label for="date" class="font-semibold text-sm">Fecha de Nacimiento</label>
                         <input type="date" id="date" name="date" class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
+
+                    <input type='text' id='id_rol' name='id_rol' class='hidden' value='2' />
 
                     <input type="submit" value="Guardar cambios" class="bg-blue-600 rounded-lg text-white h-8 w-40 my-2" />
                 </form>

@@ -80,9 +80,9 @@
             <div class="flex flex-row items-center justify-between w-full px-5 py-3">
                 <h2 class="text-2xl">Dashboard</h2>
                 <div class="flex flex-row items-center text-sm">
-                    <a href="">Home</a>
+                    <a href="./maestro_dash.php">Home</a>
                     <p>/</p>
-                    <a href="">Perfil</a>
+                    <div>Perfil</div>
                 </div>
             </div>
             <div class="flex flex-col md:w-3/4 md:border md:rounded-lg md:m-3    bg-white">

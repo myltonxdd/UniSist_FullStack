@@ -1,26 +1,19 @@
 <?php
 
-/*  session_start();
-    require("conection.php");
+ session_start();
+    require("../model/conection.php");
 
-    if(!isset($_SESSION["users"])){
+    if(!isset($_SESSION["stude"])){
         echo "No estas autorizado";
         require("index.php");
         die();
     }
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
-    $query = "SELECT * FROM users WHERE id=$id";
-    $resultado = $mysqli->query($query);
-    $datosImg = null;
+    $id = $_SESSION["stude"]["id"];
+    $nombre = $_SESSION["stude"]["nombre"];
+    $correo = $_SESSION["stude"]["email"];
 
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $mysqli->close();
 ?>
 
 
@@ -46,9 +39,9 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="flex flex-col px-3 gap-2">
                 <h2>Alumno</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -73,7 +66,7 @@
                 </div>
                 <div id="miBoton" class="flex flex-row gap-3 ">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
@@ -105,42 +98,44 @@
                     <div class="text-[#828282] text-base font-medium">Informacion de usuario</div>
                 </div>
                 <hr class=" border-[#afb1b7]">
-                <form action="subirimg.php" method="post" enctype="multipart/form-data" class="px-6 flex flex-col gap-3 mt-2 items-end">
+                <form action="../model/edit_MastAlum.php" method="post" enctype="multipart/form-data" class="px-6 flex flex-col gap-3 mt-2 items-end">
 
-                    <div class="w-full">
-                        <p class="font-semibold">Matricula</p>
-                        <h3 class="border border-stone-400 rounded-lg h-8 p-1 bg-[#e8ecee] ">12345678</h3>
+                    <div class="flex flex-col w-full">
+                        <label for="dni" class="font-semibold">Matricula</label>
+                        <input type="text" id="dni" readonly name="dni" placeholder="Enter your password..." class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
 
                     <div class="flex flex-col w-full">
                         <label for="email" class="font-semibold">Email</label>
-                        <input type="email" id="email" required name="email" placeholder="Enter your email..." class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <input type="email" id="email" name="email" placeholder="Enter your email..." value="<?= $correo ?>" class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
                     
                     <div class="flex flex-col w-full">
                         <label for="pasword" class="font-semibold">Password</label>
-                        <input type="password" id="pasword" required name="pasword" placeholder="Enter your password..." class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <input type="password" id="pasword" name="pasword" placeholder="Enter your password..." class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
 
                     <div class="flex flex-col w-full">
-                        <label for="name" class="font-semibold">Nombre(s)</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your name..." class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <label for="nombre" class="font-semibold">Nombre(s)</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Enter your name..." class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
                     
                     <div class="flex flex-col w-full">
-                        <label for="name" class="font-semibold">Apellido(s)</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your name..." class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <label for="apellido" class="font-semibold">Apellido(s)</label>
+                        <input type="text" id="apellido" name="apellido" placeholder="Enter your lastname..." class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
 
                     <div class="flex flex-col w-full">
                         <label for="direction" class="font-semibold">Dirección</label>
-                        <input type="text" id="direction" name="direction" placeholder="Enter your bio..." class="border border-stone-400 rounded-lg h-8 p-1" />
+                        <input type="text" id="direction" name="direction" placeholder="Enter your adress..." class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
 
                     <div class="flex flex-col w-full">
                         <label for="date" class="font-semibold">Fecha de Nacimiento</label>
                         <input type="date" id="date" name="date" placeholder="03/04/2022" class="border border-stone-400 rounded-lg h-8 p-1" />
                     </div>
+
+                    <input type='text' id='id_rol' name='id_rol' class='hidden' value='3' />
 
                     <input type="submit" value="Save" class="bg-blue-600 rounded-lg text-white h-8 w-24 mb-2" />
                 </form>

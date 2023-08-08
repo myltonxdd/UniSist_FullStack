@@ -263,7 +263,7 @@
                                         
                                                                 <div class='flex flex-col w-full'>
                                                                     <label for='email' class='font-semibold'>Email</label>
-                                                                    <input type='email' id='email' disabled name='email' placeholder='Ingrese su email' value='".$fila['email']."' class='border border-stone-400 rounded-lg h-8 p-1'/>
+                                                                    <input type='email' id='email' readonly name='email' placeholder='Ingrese su email' value='".$fila['email']."' class='border border-stone-400 rounded-lg h-8 p-1'/>
                                                                 </div>
                                                                 
                                                                 <div class='flex flex-col w-full'>

@@ -1,26 +1,20 @@
 <?php
 
-/*  session_start();
-    require("conection.php");
+ session_start();
+    require("../model/conection.php");
 
-    if(!isset($_SESSION["users"])){
+    if(!isset($_SESSION["stude"])){
         echo "No estas autorizado";
         require("index.php");
         die();
     }
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
+    $id = $_SESSION["stude"]["id"];
+    $nombre = $_SESSION["stude"]["nombre"];
     $query = "SELECT * FROM users WHERE id=$id";
     $resultado = $mysqli->query($query);
-    $datosImg = null;
 
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $mysqli->close();
 ?>
 
 

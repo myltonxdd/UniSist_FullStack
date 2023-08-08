@@ -72,8 +72,8 @@
                     <div class="font-medium text-sm">Home</div>
                 </div>
                 <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
-                    <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><?= $nombre ?></div>
+                    <div class="flex-row gap-2 items-center hidden md:flex ">
+                        <div class="text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>

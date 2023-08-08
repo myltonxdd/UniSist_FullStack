@@ -11,6 +11,15 @@
 
     $id = $_SESSION["master"]["id"];
     $nombre = $_SESSION["master"]["nombre"];
+    $query = "SELECT * FROM maestro_materia WHERE maestro_id=$id";
+    $resultado = $mysqli->query($query);
+    $fila = $resultado->fetch_assoc();
+    $materiaid = $fila['materia_id'];
+    
+    $query2 = "SELECT * FROM alumno_materia WHERE materia_id=$materiaid";
+    $resultado2 = $mysqli->query($query2);
+
+
     $mysqli->close();
 ?>
 
@@ -38,8 +47,8 @@
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-3">
-                <h2 class=" font-semibold">Maestro</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <h2 class="gap-2 font-semibold">Maestro</h2>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -60,7 +69,7 @@
                 </div>
                 <div id="miBoton" class="flex flex-row gap-3 cursor-pointer ">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
@@ -95,19 +104,19 @@
                 <section class="container px-4 mx-auto">
                     <div class="mt-6 md:flex md:items-center md:justify-between">
                         <div class="inline-flex bg-[#6c747e] border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-                            <button class="px-5 py-2 text-xs font-medium text-white transition-colors duration-200 hover:bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300 hover:text-gray-600">
+                            <button class="px-3 py-1 text-xs font-medium text-white transition-colors duration-200 hover:bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300 hover:text-gray-600">
                                 Copy
                             </button>
 
-                            <button class="px-5 py-2 text-xs font-medium text-white transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 hover:text-gray-600">
+                            <button class="px-3 py-1 text-xs font-medium text-white transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 hover:text-gray-600">
                                 Excel
                             </button>
 
-                            <button class="px-5 py-2 text-xs font-medium text-white transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 hover:text-gray-600">
+                            <button class="px-3 py-1 text-xs font-medium text-white transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100 hover:text-gray-600">
                                 PDF
                             </button>
 
-                            <button class="flex group relative px-5 py-2 text-xs justify-center items-center font-medium text-white transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:text-gray-600 hover:bg-gray-100">
+                            <button class="flex group relative px-3 py-1 text-xs justify-center items-center font-medium text-white transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:text-gray-600 hover:bg-gray-100">
                                 <p>Column Visivility</p>
                                 <img src="../recursos/icons/flechIzq.svg" alt="">
                                 <div class="absolute hidden top-full min-w-full w-max shadow-md mt-1 rounded group-focus:block">
@@ -171,73 +180,40 @@
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                            <?php
+                                            $i = 1;
+                                            while ($fila = $resultado2->fetch_assoc()) {
+                                                echo "
+                                                <tr>
+                                                    <td class='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+                                                        <div>
+                                                            <p class='text-sm font-normal text-gray-600 dark:text-gray-400'>".$i."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-12 py-4 text-sm font-medium whitespace-nowrap'>
                                                     <div>
-                                                        <h2 class="font-medium text-gray-800 dark:text-white ">Catalog</h2>
-                                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                        Customer
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <h4 class="text-gray-700 dark:text-gray-200">Content curating app</h4>
-                                                        <p class="text-gray-500 dark:text-gray-400">Brings all your news into one place</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80" alt="">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                        <p class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">+4</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap flex gap-1">
-                                                    <img src="../recursos/icons/addfile.svg" alt="">
-                                                    <img src="../recursos/icons/sendfile.svg" alt="">
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <div>
-                                                        <h2 class="font-medium text-gray-800 dark:text-white ">Quotient</h2>
-                                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">quotient.co</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                        Customer
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <h4 class="text-gray-700 dark:text-gray-200">Sales CRM</h4>
-                                                        <p class="text-gray-500 dark:text-gray-400">Web-based sales doc management</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1256&q=80" alt="">
-                                                        <img class="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                        <p class="flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">+4</p>
-                                                    </div>
-                                                </td>
-
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap flex gap-1">
-                                                    <img src="../recursos/icons/addfile.svg" alt="">
-                                                    <img src="../recursos/icons/sendfile.svg" alt="">
-                                                </td>
-                                            </tr>
+                                                            <p class='text-sm font-normal text-gray-600 dark:text-gray-400'>".$fila['alumno_id']."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                        <div>
+                                                            <p class='text-gray-500 dark:text-gray-400'>".$fila['nota']."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                        <div>
+                                                            <p class='bg-[#1c9fbc] text-white p-1'>". ($fila['nota'] == null)?'No hay mensajes':($fila['nota']) ."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-4 py-4 text-sm whitespace-nowrap flex gap-2'>
+                                                        <img class='editAlumn cursor-pointer' id='' src='../recursos/icons/addfile.svg' alt=''>
+                                                        <img class=' cursor-pointer'  src='../recursos/icons/sendfile.svg' alt=''>
+                                                    </td>
+                                                </tr>
+                                                ";
+                                                $i++;
+                                            } 
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>

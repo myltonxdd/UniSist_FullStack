@@ -1,26 +1,23 @@
 <?php
 
-/*  session_start();
-    require("conection.php");
+ session_start();
+    require("../model/conection.php");
 
-    if(!isset($_SESSION["users"])){
+/*     if(!isset($_SESSION["admn"])){
         echo "No estas autorizado";
         require("index.php");
         die();
-    }
+    } */
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
-    $query = "SELECT * FROM users WHERE id=$id";
+    $id = $_SESSION["admn"]["id"];
+    $nombre = $_SESSION["admn"]["nombre"];
+
+    $query = "SELECT * FROM users WHERE id_rol=2";
     $resultado = $mysqli->query($query);
-    $datosImg = null;
+    $query2 = "SELECT * FROM materias";
+    $resultado2 = $mysqli->query($query2);
 
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $mysqli->close();
 ?>
 
 
@@ -46,9 +43,9 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="flex gap-2 flex-col px-3">
                 <h2 class=" font-semibold">admin</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -81,7 +78,7 @@
                 </div>
                 <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
@@ -194,6 +191,34 @@
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                            <?php
+                                            while ($fila = $resultado->fetch_assoc()) {
+                                                echo "
+                                                <tr>
+                                                    <td class='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+                                                        <div>
+                                                            <p class='text-sm font-normal text-gray-600 dark:text-gray-400'>".$i."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-12 py-4 text-sm font-medium whitespace-nowrap'>
+                                                    <div>
+                                                            <p class='text-sm font-normal text-gray-600 dark:text-gray-400'>".$fila['materia_id']."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                        <div>
+                                                            <p class='text-gray-500 dark:text-gray-400'>".$fila."</p>
+                                                        </div>
+                                                    </td>
+                                                    <td class='px-4 py-4 text-sm whitespace-nowrap flex gap-2'>
+                                                        <img id='editAlumn' class='cursor-pointer' src='../recursos/icons/pencilSquare.svg' >
+                                                        <img class='cursor-pointer' src='../recursos/icons/trash.svg' >
+                                                    </td>
+                                                </tr>
+                                                ";
+                                                $i++;
+                                            }
+                                            ?>
                                             <tr>
                                                 <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                     <div>
@@ -216,8 +241,8 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-4 py-4 text-sm whitespace-nowrap flex gap-2">
-                                                    <img id="editAlumn" class="cursor-pointer" src="../recursos/icons/pencilSquare.svg" alt="">
-                                                    <img class=" cursor-pointer" src="../recursos/icons/trash.svg" alt="">
+                                                    <img id='editAlumn' class='cursor-pointer' src='../recursos/icons/pencilSquare.svg' >
+                                                    <img class='cursor-pointer' src='../recursos/icons/trash.svg' >
                                                 </td>
 
                                             </tr>
@@ -261,7 +286,7 @@
 
             <!-- MODAL -->
 
-            <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
+            <div id="authentication-modal2" tabindex="-1" aria-hidden="true" class="hidden flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
                 <!-- cuadro -->
                 <div class="flex flex-col items-center relative w-full h-1/2 max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700 p-4 lg:px-8">
 
@@ -274,27 +299,36 @@
 
 
                     <div class="">
-                        <h3 class="font-semibold text-2xl text-center my-2">Editar Clase</h3>
+                        <h3 class="font-semibold text-2xl text-center my-2">Agregar Clase</h3>
                     </div>
 
-                    <form action="../php/password.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
+                    <form action="../model/edi_maestrMate.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
 
                         <div class="flex flex-col w-full">
-                            <label for="dni" class="font-semibold">Nombre de la Materia</label>
-                            <input type="text" id="dni" name="dni" placeholder="Ingrese el nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
+                            <label for="materia" class="font-semibold">Nombre de la Materia</label>
+                            <select name="materia" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
+                                <?php
+                                while ($fila = $resultado2->fetch_assoc()) {
+                                    echo "<option value='".$fila['id_materia']."'>" . $fila['materia'] . "</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
 
                         <div class="flex flex-col w-full">
-                            <label for="email" class="font-semibold">Maestros Asignado</label>
-                            <select name="lenguajes" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
-                                <option value="javascript">JavaScript</option>
-                                <option value="php">PHP</option>
-                                <option value="java">Java</option>
+                            <label for="maestro" class="font-semibold">Maestros Asignado</label>
+                            <select name="maestro" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
+                                <option value="34">Vacio</option>
+                                <?php
+                                while ($fila2 = $resultado->fetch_assoc()) {
+                                    echo "<option value='".$fila2['id']."'>" . $fila2['nombre'] . "</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                         
                         <div class="w-full flex flex-row gap-2 mt-2">
-                            <div class="exitEditAlumn cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
+                            <div class="exitEditAlumn2 cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
                             <button class=" w-36 py-2 bg-blue-600 rounded-lg text-sm leading-normal font-semibold text-white" type="submit">Guardar cambios</button>
                         </div>
                     </form>
@@ -302,7 +336,9 @@
                 </div>
             </div>
 
-            <div id="authentication-modal2" tabindex="-1" aria-hidden="true" class="hidden flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
+            <!-- EDIT MODAL -->
+
+            <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
                 <!-- cuadro -->
                 <div class="flex flex-col items-center relative w-full h-1/2 max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700 p-4 lg:px-8">
 
@@ -314,7 +350,7 @@
                     </button>
 
                     <div class="">
-                        <h3 class="font-semibold text-2xl text-center my-2">Agregar Clase</h3>
+                        <h3 class="font-semibold text-2xl text-center my-2">Editar Clase</h3>
                     </div>
 
                     <form action="../php/password.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
@@ -334,7 +370,7 @@
                         </div>
 
                         <div class="w-full flex flex-row gap-2 mt-2">
-                            <div class="exitEditAlumn2 cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
+                            <div class="exitEditAlumn cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
                             <button class=" w-20 py-2 bg-blue-600 rounded-lg text-sm leading-normal font-semibold text-white" type="submit">Crear</button>
                         </div>
                     </form>
