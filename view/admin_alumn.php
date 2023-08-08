@@ -1,26 +1,20 @@
 <?php
 
-/*  session_start();
-    require("conection.php");
+ session_start();
+    require("../model/conection.php");
 
-    if(!isset($_SESSION["users"])){
+    /*     if(!isset($_SESSION["admn"])){
         echo "No estas autorizado";
-        require("index.php");
+        require("../index.php");
         die();
-    }
+    } */
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
-    $query = "SELECT * FROM users WHERE id=$id";
+    $id = $_SESSION["admn"]["id"];
+    $nombre = $_SESSION["admn"]["nombre"];
+    $query = "SELECT * FROM users WHERE id_rol=3";
     $resultado = $mysqli->query($query);
-    $datosImg = null;
 
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $mysqli->close();
 ?>
 
 
@@ -46,9 +40,9 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="flex flex-col px-3 gap-2">
                 <h2 class=" font-semibold">admin</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -79,14 +73,14 @@
                     </div>
                     <div class="font-medium text-sm">Home</div>
                 </div>
-                <div id="miBoton" class="flex flex-row gap-3 ">
+                <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
                 <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36 hidden">
-                    <a href="./perfil.php" class="flex flex-row gap-2">
+                    <a href="./admin_editPerfil.php" class="flex flex-row gap-2">
                         <img src="../recursos/icons/myprofile.svg" alt="">
                         <div class="font-medium text-sm">Perfil</div>
                     </a>
@@ -99,7 +93,7 @@
             </div>
             <div class="flex flex-row items-center justify-between w-full px-5 py-3">
                 <h2 class="text-2xl">Lista de Alumnos</h2>
-                <div class="flex flex-row items-center text-sm">
+                <div class="flex flex-row items-center text-sm text-[#828282]">
                     <a href="">Home</a>
                     <p>/</p>
                     <a href="">Perfil</a>
@@ -202,43 +196,111 @@
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                            <tr>
-                                                <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                    <div>
-                                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
+                                            
+                                            <?php
+                                                $i = 1;
+                                                while ($fila = $resultado->fetch_assoc()) {
+                                                    echo "
+                                                    <tr>
+                                                        <td class='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+                                                            <div>
+                                                                <p class='text-sm font-normal text-gray-600 dark:text-gray-400'>".$i."</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class='px-12 py-4 text-sm font-medium whitespace-nowrap'>
+                                                        <div>
+                                                                <p class='text-sm font-normal text-gray-600 dark:text-gray-400'>".$fila['dni']."</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                            <div>
+                                                                <p class='text-gray-500 dark:text-gray-400'>".$fila['nombre']."</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                            <div>
+                                                                <p class='text-gray-500 dark:text-gray-400'>".$fila['email']."</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                            <div>
+                                                                <p class='text-gray-500 dark:text-gray-400'>".$fila['direccion']."</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class='px-4 py-4 text-sm whitespace-nowrap'>
+                                                            <div>
+                                                                <p class='text-gray-500 dark:text-gray-400'>".$fila['cumpleaños']."</p>
+                                                            </div>
+                                                        </td>
+                                                        <td class='px-4 py-4 text-sm whitespace-nowrap flex gap-2'>
+                                                            <img class='editAlumn cursor-pointer' id='' src='../recursos/icons/pencilSquare.svg' alt=''>
+                                                            <img class=' cursor-pointer'  src='../recursos/icons/trash.svg' alt=''>
+                                                        </td>
+                                                    </tr>
+                                                    ";
+                                                    ///////////// MODAL EDITAR ////////
+                                                    echo "
+                                                    <div id='authentication-modal' tabindex='-1' aria-hidden='true' class='hidden flex justify-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0'>
+                                        
+                                                        <div class='flex flex-col items-center relative w-full text-gray-500 max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700 p-4 lg:px-8 gap-4'>
+                                        
+                                                            <button type='button' class='exitEditAlumn absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white' data-modal-hide='authentication-modal'>
+                                                                <svg class='w-3 h-3' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'>
+                                                                    <path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6' />
+                                                                </svg>
+                                                            </button>
+                                                            
+                                                            <div>
+                                                                <h3 class='font-semibold text-black text-2xl text-center mt-2'>Editar Alumno</h3>
+                                                            </div>
+                                        
+                                                            <form action='../model/editMetodo.php' method='post'>
+                                                                    
+                                                                <div class='flex flex-col w-full'>
+                                                                    <label for='dni' class='font-semibold'>DNI</label>
+                                                                    <input type='text' id='dni' name='dni' placeholder='Ingrese su DNI' value='".$fila['dni']."' class='border border-stone-400 rounded-lg h-8 p-1' />
+                                                                </div>
+                                        
+                                                                <div class='flex flex-col w-full'>
+                                                                    <label for='email' class='font-semibold'>Email</label>
+                                                                    <input type='email' id='email' disabled name='email' placeholder='Ingrese su email' value='".$fila['email']."' class='border border-stone-400 rounded-lg h-8 p-1'/>
+                                                                </div>
+                                                                
+                                                                <div class='flex flex-col w-full'>
+                                                                    <label for='nombre' class='font-semibold'>Nombre(s)</label>
+                                                                    <input type='text' id='nombre' name='nombre' placeholder='Ingrese su nombre' value='".$fila['nombre']."' class='border border-stone-400 rounded-lg h-8 p-1' />
+                                                                </div>
+                                                                
+                                                                <div class='flex flex-col w-full'>
+                                                                    <label for='apellido' class='font-semibold'>Apellido(s)</label>
+                                                                    <input type='text' id='apellido' name='apellido' placeholder='Ingrese su apellido' value='".$fila['apellido']."' class='border border-stone-400 rounded-lg h-8 p-1' />
+                                                                </div>
+                                        
+                                                                <div class='flex flex-col w-full'>
+                                                                    <label for='direction' class='font-semibold'>Dirección</label>
+                                                                    <input type='text' id='direction' name='direction' placeholder='Ingrese su dirección' value='".$fila['direccion']."' class='border border-stone-400 rounded-lg h-8 p-1' />
+                                                                </div>
+                                        
+                                                                <div class='flex flex-col w-full'>
+                                                                    <label for='date' class='font-semibold'>Fecha de Nacimiento</label>
+                                                                    <input type='date' id='date' name='date' value='".$fila['cumpleaños']."' class='border border-stone-400 rounded-lg h-8 p-1' />
+                                                                </div>
+                                        
+                                                                <input type='text' id='id_rol' name='id_rol' class='hidden' value='3' />
+                                        
+                                                                <div class='w-full flex flex-row gap-2 mt-2'>
+                                                                    <div class='exitEditAlumn cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white'>Close</div>
+                                                                    <button class='w-36 py-2 bg-blue-600 rounded-lg text-sm leading-normal font-semibold text-white' type='submit'>Guardar cambios</button>
+                                                                </div>
+                                                            </form>
+                                        
+                                                        </div>
                                                     </div>
-                                                </td>
-                                                <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">12345678</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <p class="text-gray-500 dark:text-gray-400">Milton Procel</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <p class="text-gray-500 dark:text-gray-400">123@123</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <p class="text-gray-500 dark:text-gray-400">Quit 12345</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div>
-                                                        <p class="text-gray-500 dark:text-gray-400">12-12-1995</p>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap flex gap-2">
-                                                    <img id="editAlumn" class="cursor-pointer" src="../recursos/icons/pencilSquare.svg" alt="">
-                                                    <img class=" cursor-pointer" src="../recursos/icons/trash.svg" alt="">
-                                                </td>
-
-                                            </tr>
+                                                    ";
+                                                    $i++;
+                                                }
+                                                
+                                            ?>
 
                                         </tbody>
                                     </table>
@@ -277,65 +339,7 @@
 
             </div>
 
-            <!-- MODAL -->
-
-            <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden flex justify-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
-                <!-- cuadro -->
-                <div class="flex flex-col items-center relative w-full max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700 p-4 lg:px-8">
-
-                    <!-- salir -->
-                    <button type="button" class="exitEditAlumn absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                    </button>
-
-
-                    <div class="">
-                        <h3 class="font-semibold text-2xl text-center my-2">Editar Alumno</h3>
-                    </div>
-
-                    <form action="../php/password.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
-
-                        <div class="flex flex-col w-full">
-                            <label for="dni" class="font-semibold">DNI</label>
-                            <input type="text" id="dni" name="dni" placeholder="Ingrese su DNI" class="border border-stone-400 rounded-lg h-8 p-1" />
-                        </div>
-
-                        <div class="flex flex-col w-full">
-                            <label for="email" class="font-semibold">Email</label>
-                            <input type="email" id="email" disabled name="email" placeholder="Ingrese su email" class="border border-stone-400 rounded-lg h-8 p-1" />
-                        </div>
-                        
-                        <div class="flex flex-col w-full">
-                            <label for="name" class="font-semibold">Nombre(s)</label>
-                            <input type="text" id="name" name="name" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
-                        </div>
-                        
-                        <div class="flex flex-col w-full">
-                            <label for="apellido" class="font-semibold">Apellido(s)</label>
-                            <input type="text" id="apellido" name="apellido" placeholder="Ingrese su apellido" class="border border-stone-400 rounded-lg h-8 p-1" />
-                        </div>
-
-                        <div class="flex flex-col w-full">
-                            <label for="direction" class="font-semibold">Dirección</label>
-                            <input type="text" id="direction" name="direction" placeholder="Ingrese su dirección" class="border border-stone-400 rounded-lg h-8 p-1" />
-                        </div>
-
-                        <div class="flex flex-col w-full">
-                            <label for="date" class="font-semibold">Fecha de Nacimiento</label>
-                            <input type="date" id="date" name="date" class="border border-stone-400 rounded-lg h-8 p-1" />
-                        </div>
-
-
-                        <div class="w-full flex flex-row gap-2 mt-2">
-                        <div class="exitEditAlumn cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
-                            <button class=" w-36 py-2 bg-blue-600 rounded-lg text-sm leading-normal font-semibold text-white" type="submit">Guardar cambios</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
+                <!-- MODAL CREA -->
 
             <div id="authentication-modal2" tabindex="-1" aria-hidden="true" class="hidden flex justify-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
                 <!-- cuadro -->
@@ -352,7 +356,7 @@
                         <h3 class="font-semibold text-2xl text-center my-2">Agregar Alumno</h3>
                     </div>
 
-                    <form action="../php/password.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
+                    <form action="../model/metodo_post.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
 
                         <div class="flex flex-col w-full">
                             <label for="dni" class="font-semibold">DNI</label>
@@ -365,8 +369,8 @@
                         </div>
                         
                         <div class="flex flex-col w-full">
-                            <label for="name" class="font-semibold">Nombre(s)</label>
-                            <input type="text" id="name" name="name" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
+                            <label for="nombre" class="font-semibold">Nombre(s)</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
                         </div>
                         
                         <div class="flex flex-col w-full">
@@ -383,6 +387,9 @@
                             <label for="date" class="font-semibold">Fecha de Nacimiento</label>
                             <input type="date" id="date" name="date" class="border border-stone-400 rounded-lg h-8 p-1" />
                         </div>
+
+                        <input type="text" id="id_rol" name="id_rol" class="hidden" value="3" />
+                        <input type="text" id="pasword" name="pasword" class="hidden" value="University2023"/>
 
                         <?php
                         if (isset($_SESSION['error_message'])) {

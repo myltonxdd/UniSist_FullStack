@@ -1,26 +1,17 @@
 <?php
 
-/*  session_start();
-    require("conection.php");
+ session_start();
+    require("../model/conection.php");
 
-    if(!isset($_SESSION["users"])){
+    if(!isset($_SESSION["master"])){
         echo "No estas autorizado";
-        require("index.php");
+        require("../index.php");
         die();
     }
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
-    $query = "SELECT * FROM users WHERE id=$id";
-    $resultado = $mysqli->query($query);
-    $datosImg = null;
-
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $id = $_SESSION["master"]["id"];
+    $nombre = $_SESSION["master"]["nombre"];
+    $mysqli->close();
 ?>
 
 
@@ -47,16 +38,16 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="flex flex-col px-3 gap-2">
                 <h2 class=" font-semibold">Maestro</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
                 <h2 class="text-sm font-semibold pl-6">MENU MAESTROS</h2>
-                <a href="#" class="flex flex-row gap-1 text-sm">
+                <a href="./maestro_calf.php" class="flex flex-row gap-1 text-sm">
                     <img src="../recursos/icons/birrete.svg" alt="">
-                    <p>Alumno</p>
+                    <p>Alumnos</p>
                 </a>
             </div>
         </div>
@@ -68,19 +59,19 @@
                     </div>
                     <div class="font-medium text-sm">Home</div>
                 </div>
-                <div id="miBoton" class="flex flex-row gap-3 ">
+                <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
                 <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36 hidden">
-                    <a href="./perfil.php" class="flex flex-row gap-2">
+                    <a href="./maestro_editPerfil.php" class="flex flex-row gap-2">
                         <img src="../recursos/icons/myprofile.svg" alt="">
                         <div class="font-medium text-sm">Perfil</div>
                     </a>
                     <hr>
-                    <a href="./logout.php" class="flex flex-row gap-2">
+                    <a href="../controler/logout.php" class="flex flex-row gap-2">
                         <img src="../recursos/icons/logout.svg" alt="">
                         <div class="text-red-600 font-medium text-sm">Logout</div>
                     </a>

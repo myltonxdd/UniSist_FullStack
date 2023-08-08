@@ -2,23 +2,27 @@
 
 session_start();
 
-require("conection.php");
-
 if($_SERVER["REQUEST_METHOD"]== "POST"){
 
-    $correo = $_POST["email"];
-    $constraseña = $_POST["pasword"];
-    $phone = $_POST["phone"];
-    $bio = $_POST["bio"];
-    $nombre = $_POST["name"];
-    $id = $_SESSION["users"]["id"];
+    extract($_POST);
 
-    $hash = password_hash($constraseña,PASSWORD_DEFAULT);
-    // PREPARO EL QUERY
+    require("conection.php");
 
-    $query= "UPDATE users SET nombre='$nombre', email='$correo', pasword='$hash', bio='$bio', phone='$phone' WHERE id=$id";
-    
-    $resultado =$mysqli->query($query);
+    $hash = password_hash($pasword,PASSWORD_DEFAULT);
+
+    if ($id_rol==2) {
+        $query= "UPDATE users SET nombre='$nombre', apellido='$apellido', email='$email', pasword='$hash', direccion='$direction', cumpleaños='$date', id_rol='$id_rol'  WHERE email=$email";
+
+        $resultado =$mysqli->query($query);
+
+    }
+    elseif($id_rol==3){
+        $query= "UPDATE users SET dni='$dni', nombre='$nombre', apellido='$apellido', email='$email', pasword='$hash', direccion='$direction', cumpleaños='$date', id_rol='$id_rol'  WHERE email=$email";
+
+        $resultado =$mysqli->query($query);
+
+    }
+
     
     if(($_FILES["img"]["tmp_name"])!= ""){
         

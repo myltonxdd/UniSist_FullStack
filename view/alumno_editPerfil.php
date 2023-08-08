@@ -53,11 +53,11 @@
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
                 <h2 class="text-sm font-semibold pl-6">MENU ALUMNOS</h2>
-                <a href="#" class="flex flex-row gap-1 text-sm">
+                <a href="./alumno_calf.php" class="flex flex-row gap-1 text-sm">
                     <img src="../recursos/icons/task.svg" alt="">
                     <p>Ver Calificaciones</p>
                 </a>
-                <a href="" class="flex flex-row gap-1 text-sm">
+                <a href="./alumno_EsqueCla.php" class="flex flex-row gap-1 text-sm">
                     <img src="../recursos/icons/easel.svg" alt="">
                     <p>Administra tus clases</p>
                 </a>
@@ -78,15 +78,17 @@
                     </div>
                 </div>
                 <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36 hidden">
-                    <a href="./perfil.php" class="flex flex-row gap-2">
-                        <img src="../recursos/icons/myprofile.svg" alt="">
-                        <div class="font-medium text-sm">Perfil</div>
-                    </a>
-                    <hr>
-                    <a href="./logout.php" class="flex flex-row gap-2">
-                        <img src="../recursos/icons/logout.svg" alt="">
-                        <div class="text-red-600 font-medium text-sm">Logout</div>
-                    </a>
+                    <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36 hidden">
+                        <a href="./admin_editPerfil.php" class="flex flex-row gap-2">
+                            <img src="../recursos/icons/myprofile.svg" alt="">
+                            <div class="font-medium text-sm">Perfil</div>
+                        </a>
+                        <hr>
+                        <a href="../controler/logout.php" class="flex flex-row gap-2">
+                            <img src="../recursos/icons/logout.svg" alt="">
+                            <div class="text-red-600 font-medium text-sm">Logout</div>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-row items-center justify-between w-full px-5 py-2">

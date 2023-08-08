@@ -79,14 +79,14 @@
                     </div>
                     <div class="font-medium text-sm">Home</div>
                 </div>
-                <div id="miBoton" class="flex flex-row gap-3 ">
+                <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
                         <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
                 <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36 hidden">
-                    <a href="./perfil.php" class="flex flex-row gap-2">
+                    <a href="./admin_editPerfil.php" class="flex flex-row gap-2">
                         <img src="../recursos/icons/myprofile.svg" alt="">
                         <div class="font-medium text-sm">Perfil</div>
                     </a>

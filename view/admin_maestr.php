@@ -1,26 +1,21 @@
 <?php
 
-/*  session_start();
-    require("conection.php");
+ session_start();
+    require("../model/conection.php");
 
-    if(!isset($_SESSION["users"])){
+   /*  if(!isset($_SESSION["admn"])){
         echo "No estas autorizado";
-        require("index.php");
+        require("../index.php");
         die();
-    }
+    } */
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
-    $query = "SELECT * FROM users WHERE id=$id";
+    $id = $_SESSION["admn"]["id"];
+    $nombre = $_SESSION["admn"]["nombre"];
+    $query = "SELECT * FROM materias";
     $resultado = $mysqli->query($query);
-    $datosImg = null;
+    $resultado2 = $mysqli->query($query);
 
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $mysqli->close();
 ?>
 
 
@@ -46,9 +41,9 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="flex flex-col px-3 gap-2">
                 <h2 class=" font-semibold">admin</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -79,14 +74,14 @@
                     </div>
                     <div class="font-medium text-sm">Home</div>
                 </div>
-                <div id="miBoton" class="flex flex-row gap-3 ">
+                <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?> </div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
                 <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36 hidden">
-                    <a href="./perfil.php" class="flex flex-row gap-2">
+                    <a href="./admin_editPerfil.php" class="flex flex-row gap-2">
                         <img src="../recursos/icons/myprofile.svg" alt="">
                         <div class="font-medium text-sm">Perfil</div>
                     </a>
@@ -105,7 +100,7 @@
                     <a href="">Maestros</a>
                 </div>
             </div>
-            <div class="flex flex-col md:border md:rounded-lg md:m-3 bg-white items-center">
+            <div class="flex flex-col md:border md:rounded-lg w-3/4 md:m-3 bg-white items-center">
 
                 <div class="p-3 text-[#828282] flex flex-row justify-between w-full items-center">
                     <div class="text-base font-medium">Información de Maestros</div>
@@ -280,22 +275,23 @@
             <!-- MODAL -->
 
             <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden flex justify-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
-                <!-- cuadro -->
+                
                 <div class="flex flex-col items-center relative w-full max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700 p-4 lg:px-8">
 
-                    <!-- salir -->
                     <button type="button" class="exitEditAlumn absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                     </button>
+                    <?php
 
+                    ?>
 
                     <div class="">
                         <h3 class="font-semibold text-2xl text-center my-2">Editar Maestro</h3>
                     </div>
 
-                    <form action="../php/password.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
+                    <form action="../model/editMetodo.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
 
                         <div class="flex flex-col w-full">
                             <label for="email" class="font-semibold">Correo Electronico</label>
@@ -303,8 +299,8 @@
                         </div>
                         
                         <div class="flex flex-col w-full">
-                            <label for="name" class="font-semibold">Nombre(s)</label>
-                            <input type="text" id="name" name="name" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
+                            <label for="nombre" class="font-semibold">Nombre(s)</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
                         </div>
                         
                         <div class="flex flex-col w-full">
@@ -323,14 +319,15 @@
                         </div>
 
                         <div class="flex flex-col w-full">
-                            <label for="email" class="font-semibold">Clase Asignada</label>
-                            <select name="lenguajes" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
-                                <option value="javascript">JavaScript</option>
-                                <option value="php">PHP</option>
-                                <option value="java">Java</option>
+                            <label for="materia" class="font-semibold">Clase Asignada</label>
+                            <select name="materia" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
+                                <?php
+                                while ($fila = $resultado->fetch_assoc()) {
+                                    echo "<option value='".$fila['id_materia']."'>" . $fila['materia'] . "</option>";
+                                }
+                                ?>
                             </select>
                         </div>
-
 
                         <div class="w-full flex flex-row gap-2 mt-2">
                         <div class="exitEditAlumn cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
@@ -341,11 +338,12 @@
                 </div>
             </div>
 
+            <!-- MODAL 2 -->
+
             <div id="authentication-modal2" tabindex="-1" aria-hidden="true" class="hidden flex justify-center fixed top-0 left-0 right-0 z-50 w-screen h-screen p-4 bg-gray-500/50 md:inset-0">
-                <!-- cuadro -->
+                
                 <div class="flex flex-col items-center relative w-full max-w-md bg-white rounded-lg shadow-lg dark:bg-gray-700 p-4 lg:px-8">
 
-                    <!-- salir -->
                     <button type="button" class="exitEditAlumn2 absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
@@ -356,7 +354,7 @@
                         <h3 class="font-semibold text-2xl text-center my-2">Agregar Maestro</h3>
                     </div>
 
-                    <form action="../php/password.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
+                    <form action="../model/metodo_post.php" method="post" id="passwordForm" class="w-full flex flex-col gap-6 relative text-gray-500 mt-4" acction="#">
                         
                         <div class="flex flex-col w-full">
                             <label for="email" class="font-semibold">Correo Electronico</label>
@@ -364,8 +362,8 @@
                         </div>
                         
                         <div class="flex flex-col w-full">
-                            <label for="name" class="font-semibold">Nombre(s)</label>
-                            <input type="text" id="name" name="name" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
+                            <label for="nombre" class="font-semibold">Nombre(s)</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" class="border border-stone-400 rounded-lg h-8 p-1" />
                         </div>
                         
                         <div class="flex flex-col w-full">
@@ -385,12 +383,24 @@
 
                         <div class="flex flex-col w-full">
                             <label for="email" class="font-semibold">Clase Asignada</label>
-                            <select name="lenguajes" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
-                                <option value="javascript">JavaScript</option>
-                                <option value="php">PHP</option>
-                                <option value="java">Java</option>
+                            <select name="materia" id="lang" class="border border-stone-400 rounded-lg h-8 p-1">
+                                <?php
+                                while ($fila = $resultado2->fetch_assoc()) {
+                                    echo "<option value='".$fila['id_materia']."'>" . $fila['materia'] . "</option>";
+                                }
+                                ?>
                             </select>
                         </div>
+
+                        <input type="text" id="id_rol" name="id_rol" class="hidden" value="2" />
+                        <input type="password" id="pasword" name="pasword" class="hidden" value="University2023"/>
+
+                        <?php
+                        if (isset($_SESSION['error_message'])) {
+                            echo '<p id="msj" class="text-red-500 w-full text-center absolute transform duration-500 ease-in-out mb-8 bottom-32" >' . $_SESSION['error_message'] . '</p>';
+                            unset($_SESSION['error_message']);
+                        }
+                        ?>
 
                         <div class="w-full flex flex-row gap-2 mt-2">
                             <div class="exitEditAlumn2 cursor-pointer w-16 text-center py-2 bg-gray-500 rounded-lg text-sm font-semibold text-white">Close</div>
