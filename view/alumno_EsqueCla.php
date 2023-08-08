@@ -5,13 +5,13 @@
 
     if(!isset($_SESSION["stude"])){
         echo "No estas autorizado";
-        require("index.php");
+        require("../index.php");
         die();
     }
 
     $id = $_SESSION["stude"]["id"];
     $nombre = $_SESSION["stude"]["nombre"];
-    $query = "SELECT * FROM users WHERE id=$id";
+    $query = "SELECT * FROM materias ";
     $resultado = $mysqli->query($query);
 
     $mysqli->close();
@@ -40,9 +40,9 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="flex flex-col gap-2 px-3">
                 <h2>Alumno</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -65,13 +65,13 @@
                     </div>
                     <div class="font-medium text-sm">Home</div>
                 </div>
-                <div id="miBoton" class="flex flex-row gap-3 ">
+                <div id="miBoton" class="flex flex-row gap-3 cursor-pointer ">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?></div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
-                <div id="miElemento" class="flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36">
+                <div id="miElemento" class="hidden flex flex-col bg-white fixed right-1 top-11 gap-3 rounded-xl drop-shadow-lg border p-3 w-36">
                     <a href="./admin_editPerfil.php" class="flex flex-row gap-2">
                         <img src="../recursos/icons/myprofile.svg" alt="">
                         <div class="font-medium text-sm">Perfil</div>
@@ -86,9 +86,9 @@
             <div class="flex flex-row items-center justify-between w-full px-5 py-3">
                 <h2 class="text-2xl">Calificaciones y mensajes de tus clases</h2>
                 <div class="flex flex-row items-center text-sm">
-                    <a href="">Home</a>
+                    <a href="./alumno_dash.php">Home</a>
                     <p>/</p>
-                    <a href="">Perfil</a>
+                    <div>Perfil</div>
                 </div>
             </div>
             <div class="w-full flex flex-row">
@@ -124,39 +124,27 @@
                                                     <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                                         Nombre de Clase
                                                     </th>
+                                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                                        Darse de baja
+                                                    </th>
 
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                                 <tr>
                                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                        <div>
-                                                            <h2 class="font-medium text-gray-800 dark:text-white ">Catalog</h2>
-                                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
-                                                        </div>
+                                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
                                                     </td>
                                                     <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                        <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                            Customer
-                                                        </div>
+                                                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
                                                     </td>
+                                                    <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
+                                                        <img src="../recursos/icons/trash.svg" alt="">
+                                                    </td>
+                                                    
 
                                                 </tr>
 
-                                                <tr>
-                                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                        <div>
-                                                            <h2 class="font-medium text-gray-800 dark:text-white ">Quotient</h2>
-                                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">quotient.co</p>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                        <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                            Customer
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -179,23 +167,20 @@
 
                         <hr class="border-[#afb1b7] mt-2">
 
-                        <form class="flex flex-col px-4" method="post" action="../controler/alumnAgrMat.php">
+                        <form class="flex flex-col px-4" method="post" action="../model/mat_alumn.php">
                             <label for="country" class="py-4 text-sm font-semibold">Seleciona la(s) Clase(s) usa la tecla Ctrl</label> 
 
                             <div class="p-2 border border-gray-200 md:rounded-lg flex flex-col">
-                                <label>
-                                    <input type="checkbox" name="selectedCountries[]" value="USA" />
-                                    USA
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="selectedCountries[]" value="Canada" />
-                                    Canada
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="selectedCountries[]" value="Mexico" />
-                                    Mexico
-                                </label>
-
+                                <?php
+                                while ($fila = $resultado->fetch_assoc()) {
+                                    echo "
+                                    <label>
+                                        <input type='checkbox' name='id_materia' value='".$fila['id_materia']."' />
+                                        ".$fila['materia']."
+                                    </label>
+                                ";
+                                }
+                                ?>
 
                             </div>
                     

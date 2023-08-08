@@ -15,7 +15,7 @@
             </div>
             <div class="bg-white p-3 flex flex-col items-center">
                 <p class="text-[#828282]">Bienvenido Ingresa a tu cuenta</p>
-                <form class="flex flex-col w-full gap-3 pt-5 sm:pt-3 items-end" action="./model/loginbd.php" method="post">
+                <form class="flex flex-col w-full gap-3 pt-5 sm:pt-3 items-end" action="../model/loginbd.php" method="post">
                     <?php if(isset($_SESSION["error_correo"])){
                     print("<p class='text-red-600 text-sm'>".$_SESSION["error_correo"]."</p>");
                     unset($_SESSION["error_correo"]);}?>

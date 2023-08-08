@@ -5,7 +5,7 @@
 
     if(!isset($_SESSION["stude"])){
         echo "No estas autorizado";
-        require("index.php");
+        require("../index.php");
         die();
     }
 
@@ -87,9 +87,9 @@
             <div class="flex flex-row items-center justify-between w-full px-5 py-2">
                 <h2 class="text-2xl">Editar datos de perfil</h2>
                 <div class="flex flex-row items-center text-sm">
-                    <a href="">Home</a>
+                    <a href="./alumno_dash.php">Home</a>
                     <p>/</p>
-                    <a href="">Perfil</a>
+                    <div>Perfil</div>
                 </div>
             </div>
             <div class="flex flex-col md:w-11/12 md:border md:rounded-lg md:mt-2 bg-white">

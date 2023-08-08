@@ -1,17 +1,17 @@
 <?php
 
  session_start();
-    require("conection.php");
+    require("../model/conection.php");
 
-/*     if(!isset($_SESSION["stude"])){
+    if(!isset($_SESSION["stude"])){
         echo "No estas autorizado";
         require("index.php");
         die();
-    } */
+    }
 
     $id = $_SESSION["stude"]["id"];
     $nombre = $_SESSION["stude"]["nombre"];
-    $query = "SELECT * FROM stude WHERE id=$id";
+    $query = "SELECT * FROM users WHERE id=$id";
     $resultado = $mysqli->query($query);
 
     $mysqli->close();

@@ -3,11 +3,11 @@
  session_start();
     require("../model/conection.php");
 
-    /*     if(!isset($_SESSION["admn"])){
+    if(!isset($_SESSION["admn"])){
         echo "No estas autorizado";
         require("../index.php");
         die();
-    } */
+    }
 
     $id = $_SESSION["admn"]["id"];
     $nombre = $_SESSION["admn"]["nombre"];

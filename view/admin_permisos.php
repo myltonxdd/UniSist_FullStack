@@ -1,26 +1,20 @@
 <?php
 
-/*  session_start();
+ session_start();
     require("conection.php");
 
-    if(!isset($_SESSION["users"])){
+    if(!isset($_SESSION["admn"])){
         echo "No estas autorizado";
         require("index.php");
         die();
     }
 
-    $id = $_SESSION["users"]["id"];
-    $nombre = $_SESSION["users"]["nombre"];
+    $id = $_SESSION["admn"]["id"];
+    $nombre = $_SESSION["admn"]["nombre"];
     $query = "SELECT * FROM users WHERE id=$id";
     $resultado = $mysqli->query($query);
-    $datosImg = null;
 
-    while ($fila = $resultado->fetch_assoc()) {
-        if ($fila["image"] != "") {
-            $datosImg = base64_encode($fila["image"]);
-        }
-    }
-    $mysqli->close(); */
+    $mysqli->close();
 ?>
 
 
@@ -46,9 +40,9 @@
                 <p>Universidad</p>
             </div>
             <hr class=" border-[#afb1b7]">
-            <div class="flex flex-col px-3">
+            <div class="gap-2 flex flex-col px-3">
                 <h2 class=" font-semibold">admin</h2>
-                <div class="font-bold text-sm"><!-- <?= $nombre ?> --> </div>
+                <div class="text-sm"><?= $nombre ?> </div>
             </div>
             <hr class=" border-[#afb1b7]">
             <div class="flex flex-col px-2 gap-2">
@@ -81,7 +75,7 @@
                 </div>
                 <div id="miBoton" class="flex flex-row gap-3 cursor-pointer">
                     <div class="flex-row items-center hidden md:flex ">
-                        <div class="font-medium text-sm"><!-- <?= $nombre ?> -->Milton </div>
+                        <div class="font-medium text-sm"><?= $nombre ?> </div>
                         <img src="../recursos/icons/flechIzq.svg" alt="">
                     </div>
                 </div>
